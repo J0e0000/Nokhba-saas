@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* هوية "النخبة" — أزرق + ذهبي + أبيض، وضع غامق/فاتح حقيقي قابل للتبديل */
+@theme {
+  --color-brand-navy: #2563EB;       /* الأزرق الأساسي (بديل الكحلي القديم) */
+  --color-brand-navy-light: #3B82F6;
+  --color-brand-gold: #F5C542;
+  --color-brand-gold-hover: #E0AC2F;
+  --color-brand-cyan: #06B6D4;
+  --color-brand-bg: var(--app-bg);
+}
+
+* { font-family: 'Cairo', ui-sans-serif, system-ui, sans-serif; }
+
+/* ============================================================
+   نظام الوضع الغامق/الفاتح — كل شيء عن طريق متغيرات CSS بس،
+   فمفيش داعي نلمس كل ملف؛ التبديل بيتم بإضافة/إزالة class="light"
+   على عنصر <html> (محفوظ في localStorage)
+   ============================================================ */
+:root {
+  --app-bg: #0B0F1A;
+  --app-bg-glow-1: rgba(37, 99, 235, 0.35);
+  --app-bg-glow-2: rgba(245, 197, 66, 0.10);
+  --surface: rgba(21, 29, 52, 0.65);
+  --surface-blur: blur(20px);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --surface-border-hover: rgba(255, 255, 255, 0.14);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --fg: #FFFFFF;
+  --fg-muted: #CBD5E1;
+  --fg-subtle: #94A3B8;
+  --shadow: 0 12px 32px rgba(0,0,0,0.35);
+}
+
+html.light {
+  --app-bg: #F3F4F6;
+  --app-bg-glow-1: rgba(37, 99, 235, 0.06);
+  --app-bg-glow-2: rgba(245, 197, 66, 0.10);
+  --surface: #FFFFFF;
+  --surface-blur: none;
+  --surface-border: #E5E7EB;
+  --surface-border-hover: #D1D5DB;
+  --input-bg: #FFFFFF;
+  --input-border: #D1D5DB;
+  --fg: #111827;
+  --fg-muted: #4B5563;
+  --fg-subtle: #6B7280;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+body {
+  background-color: var(--app-bg);
+  background-image: radial-gradient(circle at 10% 20%, var(--app-bg-glow-1) 0%, transparent 40%),
+                     radial-gradient(circle at 90% 80%, var(--app-bg-glow-2) 0%, transparent 40%);
+  background-attachment: fixed;
+  color: var(--fg);
+  transition: background-color .25s ease, color .25s ease;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface-border-hover); border-radius: 3px; }
+
+/* بطاقة السطح الأساسية — بتتبدل تلقائيًا مع الوضع */
+.glass-card {
+  background: var(--surface);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
+  border: 1px solid var(--surface-border);
+}
+.glass-card:hover { border-color: var(--surface-border-hover); }
+
+.glass-input {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--fg);
+}
+.glass-input:focus { border-color: #F5C542; box-shadow: 0 0 0 3px rgba(245,197,66,0.2); }
+.glass-input::placeholder { color: var(--fg-subtle); }
+
+/* نصوص دلالية بدل الألوان الحرفية — عشان تنعكس صح في الوضعين */
+.text-fg { color: var(--fg); }
+.text-fg-muted { color: var(--fg-muted); }
+.text-fg-subtle { color: var(--fg-subtle); }
+.border-subtle { border-color: var(--surface-border); }
+
+.card-hover { transition: all .2s ease; }
+.card-hover:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+/* زرار ذهبي متوهج — الزرار الأساسي في كل النظام */
+.btn-glow {
+  background: linear-gradient(135deg, #FFD700, #F5C542);
+  color: #1F2937;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.35);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.btn-glow:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.7); transform: translateY(-2px); }
